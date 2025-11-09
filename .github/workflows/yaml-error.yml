@@ -1,5 +1,8 @@
 name: Yaml error
-on: push
+on:
+  push:
+    paths:
+      - ".github/workflows/yaml-error.yml" # ワークフローファイルのみ
 jobs:
   run:
   run-on: ubuntu-latest
