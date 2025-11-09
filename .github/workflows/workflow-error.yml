@@ -1,0 +1,10 @@
+name: Workflow error
+on:
+  push:
+    paths:
+      - ".github/workflows/workflow-error.yml" # ワークフローファイルのみ
+jobs:
+  run:
+    run-on: ubuntu-latest
+    steps:
+      - run: date
