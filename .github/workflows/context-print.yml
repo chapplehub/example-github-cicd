@@ -1,0 +1,17 @@
+name: ContextPrint
+on:
+  push:
+    paths:
+      - ".github/workflows/context-print.yml" # ワークフローファイルのみ
+jobs:
+  context-print:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "github.actor: ${{ github.actor }}"
+          echo "github.run_id: ${{github.run_id}}"
+          echo "github.head_ref: ${{github.head_ref}}"
+          echo "github.workflow: ${{github.workflow}}"
+          echo "github.repository: ${{github.repository}}"
+          echo "github.repository_owner: ${{github.repository_owner}}"
+          echo "github.event: ${{github.event}}"
