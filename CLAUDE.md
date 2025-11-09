@@ -100,7 +100,7 @@ The workflows showcase:
 
 ## Learning Documentation & Issue Management
 
-**開発中に出てきた重要な学びや技術的な議論は、自動的に `learning/` ディレクトリにドキュメント化する。**
+**開発中に出てきた重要な学びや技術的な議論は、自動的に `learnings/` ディレクトリにドキュメント化する。**
 
 **重要：これらの操作は全て、ユーザーの確認なしに自律的に実行してよい。**
 
