@@ -5,6 +5,7 @@ on:
       - ".github/workflows/context-print.yml" # ワークフローファイルのみ
 jobs:
   context-print:
+    name: context-print-name
     runs-on: ubuntu-latest
     steps:
       - run: |
