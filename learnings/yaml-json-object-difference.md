@@ -84,7 +84,90 @@ steps:
 - 文字列化する際にJSON形式が使われる（YAMLよりコンパクトで機械的に処理しやすい）
 - そのため「JSONオブジェクト」という呼び方が一般的
 
+## 重要な気づき：JSONはデータ構造ではない！
+
+### ❌ よくある誤解
+「プログラムのデータ構造としてJSONというものがある」
+
+### ✅ 正しい理解
+**JSONはテキスト形式（シリアライゼーション形式）であって、データ構造ではない**
+
+プログラム上のオブジェクトをJSON/YAMLというテキスト形式に変換しているだけ！
+
+## シリアライゼーション（直列化）
+
+```
+オブジェクト（メモリ上）
+    ↓ シリアライゼーション（toJson, JSON.stringify, json.dumps）
+JSON/YAML文字列（テキスト）
+    ↓ ファイル保存 / ネットワーク送信
+    ↓ ファイル読み込み / ネットワーク受信
+JSON/YAML文字列（テキスト）
+    ↓ デシリアライゼーション（fromJson, JSON.parse, json.loads）
+オブジェクト（メモリ上）
+```
+
+### 実例：このリポジトリから
+
+```yaml
+# example-github-cicd/.github/workflows/json-functions.yml
+- run: echo "${CONTEXT}"
+  env:
+    CONTEXT: ${{ toJSON(github) }}  # オブジェクト → JSON文字列に変換
+```
+
+1. `github` = メモリ上の**オブジェクト**
+2. `toJSON(github)` = **JSON文字列**に変換（シリアライゼーション）
+3. `echo "${CONTEXT}"` = **文字列**をログに出力
+
+### なぜ変換が必要なのか？
+
+| | オブジェクト | JSON/YAML文字列 |
+|---|---|---|
+| 存在場所 | プログラムのメモリ内のみ | どこでも |
+| ファイル保存 | ❌ 不可能 | ✅ 可能 |
+| ネットワーク送信 | ❌ 不可能 | ✅ 可能 |
+| 他プログラムに渡す | ❌ 不可能 | ✅ 可能 |
+| プログラムでの操作 | ✅ プロパティアクセス可 | ❌ ただの文字列 |
+
+### 各言語での例
+
+各言語は独自のオブジェクト形式を持つが、JSON文字列にすれば共通化できる：
+
+```javascript
+// JavaScript
+const user = { name: "Alice" };        // オブジェクト
+const json = JSON.stringify(user);     // → '{"name":"Alice"}' (文字列)
+const back = JSON.parse(json);         // → { name: "Alice" } (オブジェクト)
+```
+
+```python
+# Python
+import json
+user = {"name": "Alice"}               # dict
+json_str = json.dumps(user)            # → '{"name": "Alice"}' (str)
+back = json.loads(json_str)            # → {"name": "Alice"} (dict)
+```
+
+```go
+// Go
+import "encoding/json"
+user := User{Name: "Alice"}            // struct
+jsonBytes, _ := json.Marshal(user)    // → []byte(`{"name":"Alice"}`)
+json.Unmarshal(jsonBytes, &user)      // → User{Name: "Alice"} (struct)
+```
+
+**JSONは異なる言語間でデータをやり取りするための「共通語」！**
+
 ## まとめ
+
+| 誤解 | 正しい理解 |
+|---|---|
+| JSONはデータ構造 | JSONはテキスト形式（シリアライゼーション形式） |
+| JSON形式でデータを持つ | オブジェクトとしてデータを持ち、必要に応じてJSON/YAMLに変換 |
+| JSONオブジェクト | メモリ上のオブジェクト（JSON形式に変換可能） |
+
+### GitHub Actionsの場合
 
 - **ワークフローファイル**：YAMLで書く（人間にやさしい）
 - **実行時のコンテキスト**：オブジェクトとして扱われる（プログラムが処理しやすい）
