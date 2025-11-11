@@ -1,0 +1,39 @@
+name: If Placement Example
+
+on: push
+
+jobs:
+  # ジョブレベルのif
+  # ↓ runs-onと同じインデントレベルに書く
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build step
+        run: echo "Building..."
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      # ステップレベルのif
+      # ↓ name, runと同じインデントレベルに書く
+      - name: Run tests
+        if: github.event_name == 'push'
+        run: echo "Testing..."
+
+      - name: Another step
+        run: echo "This always runs"
+
+      # ifが先に来てもOK（順序は自由）
+      - if: success()
+        name: Success step
+        run: echo "Previous steps succeeded"
+
+  deploy:
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    # ifはrunsOnの前でも後でもOK（プロパティの順序は自由）
+    if: needs.build.result == 'success'
+    steps:
+      - name: Deploy
+        run: echo "Deploying..."
