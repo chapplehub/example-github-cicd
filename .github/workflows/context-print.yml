@@ -15,3 +15,4 @@ jobs:
           echo "github.repository: ${{github.repository}}"
           echo "github.repository_owner: ${{github.repository_owner}}"
           echo "github.event: ${{github.event}}"
+          echo "github.event.*.html_url: ${{ github.event.*.html_url }}"
