@@ -1,0 +1,13 @@
+name: GenerateFunction
+on:
+  push:
+    paths:
+      - ".github/workflows/generate-function.yml" # ワークフローファイルのみ
+jobs:
+  generate-function:
+    runs-on: ubuntu-latest
+    steps:
+      - run: printenv | grep '_FUNC'
+        env:
+          FORMAT_FUNC: ${{ format('{0}, {1}.', 'Hi', 'world')}}
+          JOIN_FUNC: ${{ join(github.event.*.html_url, ',')}}
