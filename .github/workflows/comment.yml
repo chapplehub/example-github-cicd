@@ -2,7 +2,7 @@ name: Comment
 on:
   pull_request:
     paths:
-      - ".github/workflows/comment.yml" # ワークフローファイルのみ
+      - ".github/workflows/comment.yml"
 jobs:
   comment:
     name: comment-name
