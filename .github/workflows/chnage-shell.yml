@@ -1,0 +1,16 @@
+name: Change shell
+on:
+  push:
+    paths:
+      - ".github/workflows/change-shell.yml" # ワークフローファイルのみ
+jobs:
+  print:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - shell: bash
+        run: echo "${SHELL}"
+      - shell: python
+        run: |
+          import os
+          print(os.environ['PATH'])
