@@ -1,5 +1,8 @@
 name: Timeout
-on: push
+on:
+  push:
+    paths:
+      - ".github/workflows/timeout.yml" # ワークフローファイルのみ
 jobs:
   sleep:
     runs-on: ubuntu-latest
