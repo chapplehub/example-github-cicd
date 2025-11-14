@@ -2,7 +2,7 @@ name: Auto cancel
 on:
   push:
     paths:
-      - ".github/workflows/auto-cancel.yml" # ワークフローファイルのみ-
+      - ".github/workflows/auto-cancel.yml" # ワークフローファイルのみ
 concurrency:
   group: $({ github.workflow }}-$({ github.ref }}
   cancel-in-progress: true #同ーグループのワークフローが実行中ならキャンセル
