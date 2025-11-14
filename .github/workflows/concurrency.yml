@@ -2,7 +2,7 @@ name: Concurrency
 on:
   push:
     paths:
-      - ".github/workflows/concurrency.yml" # ワークフローファイルのみ
+      - ".github/workflows/concurrency.yml" # ワークフローファイルのみ-
 concurrency: ${{ github.workflow}}
 jobs:
   sleep:
