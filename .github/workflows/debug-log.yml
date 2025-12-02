@@ -2,7 +2,7 @@ name: Debug log
 on:
   push:
     paths:
-      - ".github/workflows/debut-log.yml" # ワークフローファイルのみ
+      - ".github/workflows/debug-log.yml" # ワークフローファイルのみ
 jobs:
   log:
     runs-on: ubuntu-latest
