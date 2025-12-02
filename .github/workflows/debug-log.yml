@@ -1,0 +1,10 @@
+name: Debug log
+on:
+  push:
+    paths:
+      - ".github/workflows/debut-log.yml" # ワークフローファイルのみ
+jobs:
+  log:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "::debug::This is a debug log"
