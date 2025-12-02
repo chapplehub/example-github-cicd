@@ -2,7 +2,7 @@ name: Sequential jobs
 on:
   push:
     paths:
-      - ".github/workflows/sequential-jobs.yml" # ワークフローファイルのみ
+      - ".github/workflows/sequential-jobs.yml" # ワークフローファイル
 jobs: # jobsキーへ複数のジョブを定義すれば、並列に実行される
   first:
     runs-on: ubuntu-latest
